@@ -12,13 +12,34 @@ namespace MailClient.ViewModels
     class MainWindowViewModel : BaseViewModel
     {
         private double halfWindowSize;
+        private string title = "MyMailClient";
 
-        public double HalfWindowSize
+        /// <summary> Заголовок окна </summary>
+        public string Title
         {
-            get => halfWindowSize;
-            set => halfWindowSize = value;
+            get => title;
+            set
+            {
+                if (Equals(title, value)) return;
+                else
+                {
+                    title = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-      
+        //Сделать свойство для высоты окна 
+
+
+
+        /// <summary> Высота RichTextBox'a </summary>
+        //public double HalfWindowSize
+        //{
+        //    get => halfWindowSize;
+        //    set => halfWindowSize = value;
+        //}
+
+
     }
 }
