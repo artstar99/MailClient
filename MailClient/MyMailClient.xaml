@@ -46,7 +46,8 @@
                                     <TextBlock Text="Отправку" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                            <Button Content="Отправить" Margin="3,5,20,15" BorderThickness="0" Height="80"  Padding="5" Background="#FFEBEBEB"/>
+                            <Button Content="Отправить" Margin="3,5,20,15" BorderThickness="0"
+                                    Height="80"  Padding="5" Background="#FFEBEBEB"/>
                         </StackPanel>
                         <StackPanel Grid.Column="0">
                             <!--Background="Tomato"-->
