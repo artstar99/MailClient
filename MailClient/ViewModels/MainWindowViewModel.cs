@@ -19,6 +19,7 @@ namespace MailClient.ViewModels
         private string title = "MyMailClient";
         private EmailCollection emailCollectionData;
         private ObservableCollection<SmtpData> smtpDataCollection;
+        private Window adressesWindow = new AdressesWindow();
 
         /// <summary> Заголовок окна </summary>
         public string Title
@@ -46,7 +47,7 @@ namespace MailClient.ViewModels
             }
         }
 
-
+        /// <summary> Данные Smtp Серверов </summary>
         public ObservableCollection<SmtpData> SmtpDataCollection
         {
             get => smtpDataCollection;
@@ -67,14 +68,16 @@ namespace MailClient.ViewModels
 
         #endregion
 
-        public ICommand OpenAdressesWindow { get; }
-        private bool CanOpenAdressesWindowExecute(object p) => true;
-        private void OnOpenAdressesWindowExecuted(object p) =>
+        #region OpenAdressesWindowCommand
+        public ICommand OpenAdressesWindowCommand { get; }
+        private bool CanOpenAdressesWindowCommandExecute(object p) => true;
+        private void OnOpenAdressesWindowCommandExecuted(object p) => adressesWindow.ShowDialog();
+        #endregion
 
         public MainWindowViewModel()
         {
-            CloseApplicationCommand =
-                new RelayCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            OpenAdressesWindowCommand = new RelayCommand(OnOpenAdressesWindowCommandExecuted, CanOpenAdressesWindowCommandExecute);
 
 
             #region Список адресов отправителей
