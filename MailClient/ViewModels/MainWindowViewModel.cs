@@ -5,14 +5,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using MailClient.Annotations;
+using MailClient.Infrastructure;
+using MailClient.Models;
 
 namespace MailClient.ViewModels
 {
     class MainWindowViewModel : BaseViewModel
     {
-        private double halfWindowSize;
         private string title = "MyMailClient";
+        private EmailCollection emailCollectionData;
 
         /// <summary> Заголовок окна </summary>
         public string Title
@@ -20,25 +24,54 @@ namespace MailClient.ViewModels
             get => title;
             set
             {
-                if (Equals(title, value)) return;
-                else
-                {
-                    title = value;
-                    OnPropertyChanged();
-                }
+                if (Equals(title, value))
+                    return;
+                title = value;
+                OnPropertyChanged();
+
             }
         }
 
-        //Сделать свойство для высоты окна 
+        /// <summary> Адреса отправителей  </summary>
+        public EmailCollection EmailCollectionData
+        {
+            get => emailCollectionData;
+            set
+            {
+                if (Equals(emailCollectionData, value)) return;
+                emailCollectionData = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #region CloseApplicationCommand
+
+        public ICommand CloseApplicationCommand { get; }
+        private bool CanCloseApplicationCommandExecute(object p) => true;
+
+        private void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
+
+        #endregion
 
 
+        public MainWindowViewModel()
+        {
+            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
 
-        /// <summary> Высота RichTextBox'a </summary>
-        //public double HalfWindowSize
-        //{
-        //    get => halfWindowSize;
-        //    set => halfWindowSize = value;
-        //}
+
+            #region Список адресов отправителей
+            var dic = new Dictionary<string, string>()
+            {
+                {"artstar99@gmail.com", "132132"},
+                {"artcore.gen@gmail.com", "5665656"}
+            };
+
+            emailCollectionData = new EmailCollection(dic); 
+            #endregion
+
+
+        }
+
 
 
     }

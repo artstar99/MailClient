@@ -6,7 +6,6 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using MailClient.Data;
 
 
 namespace MailClient.Models

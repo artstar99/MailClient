@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MailClient.ViewModels"
+        xmlns:cmd="clr-namespace:MailClient.Infrastructure"
         xmlns:local="clr-namespace:MailClient"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext> 
+    
     <Grid x:Name="BaseGrid">
         <DockPanel >
             <Menu DockPanel.Dock="Top">
@@ -30,7 +34,7 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid Grid.Row="1">
                         <!--Background="DarkSlateGray"-->
                         <Grid.ColumnDefinitions>
@@ -39,7 +43,8 @@
                             <ColumnDefinition Width="150"/>
 
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="2"  Orientation="Vertical" VerticalAlignment="Bottom"><!--Background="Peru"-->
+                        <StackPanel Grid.Column="2"  Orientation="Vertical" VerticalAlignment="Bottom">
+                            <!--Background="Peru"-->
                             <Button Margin="3,5,20,5" BorderThickness="0" Padding="5" Height="45" Background="#FFEBEBEB" >
                                 <StackPanel>
                                     <TextBlock Text="Запланировать" HorizontalAlignment="Center"/>
@@ -47,28 +52,190 @@
                                 </StackPanel>
                             </Button>
                             <Button Content="Отправить" Margin="3,5,20,15" BorderThickness="0"
+                                    Command="{Binding CloseApplicationCommand}"
                                     Height="80"  Padding="5" Background="#FFEBEBEB"/>
                         </StackPanel>
                         <StackPanel Grid.Column="0">
                             <!--Background="Tomato"-->
-                            <TextBlock Margin="5,15,10,3" Text="От:" HorizontalAlignment="Right" FontSize="12"/>
-                            <TextBlock Margin="5,9,10,3" Text="Пароль:" HorizontalAlignment="Right" FontSize="12"/>
-                            <TextBlock Margin="5,9,10,3" Text="Кому:" HorizontalAlignment="Right" FontSize="12"/>
-                            <TextBlock Margin="5,9,10,3" Text="Тема:" HorizontalAlignment="Right" FontSize="12"/>
-                            <TextBlock Margin="5,9,10,3" Text="Вложение:" HorizontalAlignment="Right" FontSize="12"/>
-                                               
+                            <TextBlock Margin="5,12,10,3" Text="От:" HorizontalAlignment="Right" FontSize="12"/>
+                            <TextBlock Margin="5,11,10,3" Text="Smtp:" HorizontalAlignment="Right" FontSize="12"/>
+                            <TextBlock Margin="5,11,10,3" Text="Кому:" HorizontalAlignment="Right" FontSize="12"/>
+                            <TextBlock Margin="5,11,10,3" Text="Тема:" HorizontalAlignment="Right" FontSize="12"/>
+                            <TextBlock Margin="5,11,10,3" Text="Вложение:" HorizontalAlignment="Right" FontSize="12"/>
+
                         </StackPanel>
 
                         <StackPanel Grid.Column="1">
+                            <ToolBarTray Height="30" Background="{x:Null}"
+                                         Margin="5,5,10,0"
+                                         IsLocked="True"
+                                         VerticalAlignment="Top">
+                                <ToolBar x:Name="TbSender" HorizontalAlignment="Left"
+                                         Height="30" Background="{x:Null}" Width="502"
+                                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    
+                                    <ComboBox x:Name="ComboBoxSenderSelect"
+                                               
+                                              ItemsSource="{Binding EmailCollectionData.SendersCollection.Keys}"
+                                              VerticalAlignment="Stretch"
+                                              ToolTip="Выбрать e-mail щтправителя"
+                                              HorizontalAlignment="Center" Width="260">
+                                        <!--<ComboBoxItem>
+                                            <Button Content="Добавить адрес"
+                                                    Background="{x:Null}"
+                                                    BorderBrush="{x:Null}"
+                                                    Margin="-2,0" 
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center" Width="252" />
+                                        </ComboBoxItem>-->
+                                    </ComboBox>
+                                    <Button x:Name="ButtonEditSender"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Редактировать запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-edit-24.png" Height="12"/>
+                                    </Button>
+                                    <Button x:Name="ButtonDeleteSender"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Удалить запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-delete-30.png" Height="12"/>
+                                    </Button>
+                                </ToolBar>
+                            </ToolBarTray>
+                            <ToolBarTray Height="30" Background="{x:Null}"
+                                         Margin="5,0,10,0"
+                                         IsLocked="True"
+                                         VerticalAlignment="Top">
+                                <ToolBar x:Name="TbSmtp" HorizontalAlignment="Left"
+                                         Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    <ComboBox x:Name="ComboBoxSmtpSelect"
+                                              VerticalAlignment="Stretch"
+                                              ToolTip="Выбрать e-mail щтправителя"
+                                              HorizontalAlignment="Center" Width="260">
+                                        <ComboBoxItem Content="artstar99@gmail.com"/>
+                                        <ComboBoxItem Content ="artcore.gen@gmail.com"/>
+                                        <ComboBoxItem Content="Добавить адрес"/>
+                                    </ComboBox>
+                                    <Button x:Name="ButtonEditSmtp"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Редактировать запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-edit-24.png" Height="12"/>
+                                    </Button>
+                                    <Button x:Name="ButtonDeleteSmtp"
+                                            Height="25" Width="25" MinWidth="25"
+                                            ToolTip="Удалить запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-delete-30.png" Height="12"/>
+                                    </Button>
+                                </ToolBar>
+                            </ToolBarTray>
+                            <ToolBarTray Height="30" Background="{x:Null}"
+                                         Margin="5,0,10,0"
+                                         IsLocked="True"
+                                         VerticalAlignment="Top">
+                                <ToolBar x:Name="TbTo" HorizontalAlignment="Left"
+                                         Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    <ComboBox x:Name="ComboBoxToSelect"
+                                              VerticalAlignment="Stretch"
+                                              ToolTip="Выбрать e-mail щтправителя"
+                                              HorizontalAlignment="Center" Width="260">
+                                        <ComboBoxItem Content="artstar99@gmail.com"/>
+                                        <ComboBoxItem Content ="artcore.gen@gmail.com"/>
+                                        <ComboBoxItem Content="Добавить адрес"/>
+                                    </ComboBox>
+                                    <Button x:Name="ButtonEditTo"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Редактировать запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-edit-24.png" Height="12"/>
+                                    </Button>
+                                    <Button x:Name="ButtonDeleteTo"
+                                            Height="25" Width="25" MinWidth="25"
+                                            ToolTip="Удалить запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-delete-30.png" Height="12"/>
+                                    </Button>
+                                </ToolBar>
+                            </ToolBarTray>
+
+                            <ToolBarTray Height="30" Background="{x:Null}"
+                                         Margin="5,0,10,0"
+                                         IsLocked="True"
+                                         VerticalAlignment="Top">
+                                <ToolBar x:Name="TbTheme" HorizontalAlignment="Left"
+                                         Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    <TextBox x:Name="ComboBoxThemeSelect"
+                                              VerticalAlignment="Stretch"
+                                              ToolTip="Выбрать e-mail щтправителя"
+                                              HorizontalAlignment="Center" Width="260">
+                                       
+                                    </TextBox>
+                                    <!--<Button x:Name="ButtonEditTheme"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Редактировать запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-edit-24.png" Height="12"/>
+                                    </Button>-->
+                                    <!--<Button x:Name="ButtonDeleteTheme"
+                                            Height="25" Width="25" MinWidth="25"
+                                            ToolTip="Удалить запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-delete-30.png" Height="12"/>
+                                    </Button>-->
+                                </ToolBar>
+                            </ToolBarTray>
+                            <ToolBarTray Height="30" Background="{x:Null}"
+                                         Margin="5,0,10,0"
+                                         IsLocked="True"
+                                         VerticalAlignment="Top">
+                                <ToolBar x:Name="TbAttach" HorizontalAlignment="Left"
+                                         Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                    <ComboBox x:Name="ComboBoxAttachSelect"
+                                              VerticalAlignment="Stretch"
+                                              ToolTip="Выбрать e-mail щтправителя"
+                                              HorizontalAlignment="Center" Width="260">
+                                        <ComboBoxItem Content="artstar99@gmail.com"/>
+                                        <ComboBoxItem Content ="artcore.gen@gmail.com"/>
+                                        <ComboBoxItem Content="Добавить адрес"/>
+
+</ComboBox>
+                                    <Button x:Name="ButtonEditAttach"
+                                            MinWidth="25"
+                                            Height="25" Width="25"
+                                            ToolTip="Редактировать запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-edit-24.png" Height="12"/>
+                                    </Button>
+                                    <Button x:Name="ButtonDeleteAttach"
+                                            Height="25" Width="25" MinWidth="25"
+                                            ToolTip="Удалить запись"
+                                            VerticalAlignment="Stretch" >
+                                        <Image Source="Resources/icons8-delete-30.png" Height="12"/>
+                                    </Button>
+                                </ToolBar>
+                            </ToolBarTray>
+
                             <!--Background="AntiqueWhite"-->
-                            <TextBox Margin="5,10,10,3" Height="24" Background="{x:Null}"  />
-                            <TextBox Margin="5,1,10,3" Height="24" Background="{x:Null}"  />
-                            <TextBox Margin="5,1,10,3" Height="24" Background="{x:Null}"  />
-                            <TextBox Margin="5,1,10,3" Height="24" Background="{x:Null}"  />
-                            <TextBox Margin="5,1,10,3" Height="24" Background="{x:Null}"  />
-                            
-                            
-                           
+                            <!--<ComboBox Margin="5,10,10,3" Height="24"   />
+                            <ComboBox Margin="5,1,10,3" Height="24"   />
+                            <ComboBox Margin="5,1,10,3" Height="24"   />
+                            <ComboBox Margin="5,1,10,3" Height="24"   />
+                            <ComboBox Margin="5,1,10,3" Height="24"   />-->
+
+
+
 
                         </StackPanel>
 
@@ -82,7 +249,7 @@
                     <Separator VerticalAlignment="Bottom" Background="#FFBBBBBB" />
 
                 </Grid>
-                
+
 
                 <RichTextBox Grid.Row="1" FontSize="14" Block.LineHeight="1" TextOptions.TextFormattingMode="Display">
                     <FlowDocument>
@@ -94,7 +261,8 @@
 
             </Grid>
         </DockPanel>
-        
+
+
     </Grid>
 
 </Window>
