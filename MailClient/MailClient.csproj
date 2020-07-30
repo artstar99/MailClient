@@ -76,6 +76,9 @@
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Models\MailSender.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="AdressesWindow.xaml.cs">
+      <DependentUpon>AdressesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MyMailClient.xaml">
@@ -90,6 +93,10 @@
       <DependentUpon>MyMailClient.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="AdressesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

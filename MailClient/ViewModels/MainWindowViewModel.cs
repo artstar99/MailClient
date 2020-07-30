@@ -67,6 +67,9 @@ namespace MailClient.ViewModels
 
         #endregion
 
+        public ICommand OpenAdressesWindow { get; }
+        private bool CanOpenAdressesWindowExecute(object p) => true;
+        private void OnOpenAdressesWindowExecuted(object p) =>
 
         public MainWindowViewModel()
         {
