@@ -114,12 +114,12 @@
                                          Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
                                     <ComboBox x:Name="ComboBoxSmtpSelect"
+                                              ItemsSource="{Binding SmtpDataCollection}"
+                                              DisplayMemberPath="Host"
                                               VerticalAlignment="Stretch"
                                               ToolTip="Выбрать e-mail щтправителя"
                                               HorizontalAlignment="Center" Width="260">
-                                        <ComboBoxItem Content="artstar99@gmail.com"/>
-                                        <ComboBoxItem Content ="artcore.gen@gmail.com"/>
-                                        <ComboBoxItem Content="Добавить адрес"/>
+                                    
                                     </ComboBox>
                                     <Button x:Name="ButtonEditSmtp"
                                             MinWidth="25"
@@ -175,6 +175,7 @@
                                          Height="30" Background="{x:Null}" Width="502" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
                                     <TextBox x:Name="ComboBoxThemeSelect"
+                                             
                                               VerticalAlignment="Stretch"
                                               ToolTip="Выбрать e-mail щтправителя"
                                               HorizontalAlignment="Center" Width="260">

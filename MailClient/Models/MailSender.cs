@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MailClient.ViewModels;
 
 
 namespace MailClient.Models
@@ -24,7 +25,7 @@ namespace MailClient.Models
 
             mail = new MailMessage(from, to) { Subject = theme, Body = body, IsBodyHtml = false };
 
-            smtp = new SmtpClient(SmtpData.GmailHost, SmtpData.GmailPort)
+            smtp = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -52,7 +53,7 @@ namespace MailClient.Models
 
         public MailSender()
         {
-                
+
         }
 
     }

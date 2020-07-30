@@ -10,6 +10,15 @@ namespace MailClient.Models
         private int port;
         private string host;
 
+        //private Dictionary<string, int> smtpEntry;
+
+
+        //public Dictionary<string, int> SmtpEntry
+        //{
+        //    get => smtpEntry;
+        //    set => smtpEntry = value;
+        //}
+
         public string Host
         {
             get => host;
@@ -26,6 +35,7 @@ namespace MailClient.Models
         {
             this.host = host;
             this.port = port;
+
         }
     }
 

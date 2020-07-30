@@ -30,7 +30,7 @@ namespace MailClient.Models
         //    {"artcore.gen@gmail.com", "5665656"}
         //};
 
-    public Dictionary<string, string> SendersCollection
+        public Dictionary<string, string> SendersCollection
         {
             get => sendersCollection;
             set => sendersCollection = value;
@@ -38,10 +38,10 @@ namespace MailClient.Models
 
         public EmailCollection()
         {
-            
+
         }
 
-        public EmailCollection( Dictionary<string, string> dictionary)
+        public EmailCollection(Dictionary<string, string> dictionary)
         {
             sendersCollection = dictionary;
         }
