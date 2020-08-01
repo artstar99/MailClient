@@ -2,7 +2,7 @@
 
 namespace MailClient.Models
 {
-    internal class Emails
+    internal class Email
     {
         private string pass;
         private string adress;
@@ -19,7 +19,7 @@ namespace MailClient.Models
             set => pass = value;
         }
     }
-    internal class EmailCollection
+    internal class SendersEmails
     {
 
         private Dictionary<string, string> sendersCollection;
@@ -36,12 +36,12 @@ namespace MailClient.Models
             set => sendersCollection = value;
         }
 
-        public EmailCollection()
+        public SendersEmails()
         {
 
         }
 
-        public EmailCollection(Dictionary<string, string> dictionary)
+        public SendersEmails(Dictionary<string, string> dictionary)
         {
             sendersCollection = dictionary;
         }

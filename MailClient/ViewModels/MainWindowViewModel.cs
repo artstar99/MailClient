@@ -17,9 +17,9 @@ namespace MailClient.ViewModels
     class MainWindowViewModel : BaseViewModel
     {
         private string title = "MyMailClient";
-        private EmailCollection emailCollectionData;
+        private SendersEmails sendersEmailsData;
         private ObservableCollection<SmtpData> smtpDataCollection;
-        private Window adressesWindow = new AdressesWindow();
+        private Window adressesWindow;
 
         /// <summary> Заголовок окна </summary>
         public string Title
@@ -36,13 +36,13 @@ namespace MailClient.ViewModels
         }
 
         /// <summary> Адреса отправителей  </summary>
-        public EmailCollection EmailCollectionData
+        public SendersEmails SendersEmailsData
         {
-            get => emailCollectionData;
+            get => sendersEmailsData;
             set
             {
-                if (Equals(emailCollectionData, value)) return;
-                emailCollectionData = value;
+                if (Equals(sendersEmailsData, value)) return;
+                sendersEmailsData = value;
                 OnPropertyChanged();
             }
         }
@@ -71,7 +71,12 @@ namespace MailClient.ViewModels
         #region OpenAdressesWindowCommand
         public ICommand OpenAdressesWindowCommand { get; }
         private bool CanOpenAdressesWindowCommandExecute(object p) => true;
-        private void OnOpenAdressesWindowCommandExecuted(object p) => adressesWindow.ShowDialog();
+        private void OnOpenAdressesWindowCommandExecuted(object p)
+        {
+            adressesWindow = new AdressesWindow();
+            adressesWindow.ShowDialog();
+        }
+
         #endregion
 
         public MainWindowViewModel()
@@ -88,7 +93,7 @@ namespace MailClient.ViewModels
                 {"artcore.gen@gmail.com", "5665656"}
             };
 
-            emailCollectionData = new EmailCollection(dic);
+            sendersEmailsData = new SendersEmails(dic);
 
             #endregion
 
