@@ -5,37 +5,89 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace TestConsole
 {
+
+    class PasswordEncrypter
+    {
+        private string incomingPassword;
+        private string returningPassword;
+        public string encryptedPassword;
+
+
+        public PasswordEncrypter(string s)
+        {
+            incomingPassword = s;
+            Encrypt();
+        }
+
+        private void Encrypt()
+        {
+            encryptedPassword = "";
+            char temp;
+            foreach (var ch in incomingPassword)
+            {
+                temp = ch;
+                temp++;
+                temp++;
+                encryptedPassword += temp;
+            }
+
+            incomingPassword = null;
+        }
+
+        public string Decrypt()
+        {
+            returningPassword = "";
+            char temp;
+            foreach (var ch in encryptedPassword)
+            {
+                temp = ch;
+                temp--;
+                temp--;
+                returningPassword += temp;
+            }
+
+            return returningPassword;
+        }
+    }
+
+ 
+    
     class Program
     {
+        //private static string password = "adey687#kRi)";
+        
         static void Main(string[] args)
         {
-            var from = new MailAddress("artstar99@gmail.com", "Kostya");
-            var to =new MailAddress("artcore.gen@gmail.com");
-            var m = new MailMessage(from, to) {Subject = "Тест", Body = "Тестовое письмо", IsBodyHtml = false};
+            string password = "azZ~dey687#kRi)";
 
-            var smtp = new SmtpClient("smtp.gmail.com", 587)
-            {
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential("artstar99@gmail.com", "")
-            };
+            string b = "azZ~dey687#kRi)";
 
-            try
-            {
-                smtp.Send(m);
-                Console.WriteLine("Письмо должно было быть отправлено");
-            }
-            catch (Exception e)
-            {
+            PasswordEncrypter encrypter = new PasswordEncrypter(password);
 
-                Console.WriteLine("Невозможно отправить письмо" + e.ToString());
-            }
+            Console.WriteLine($"Исходный пароль:\t{password}");
+
+            Console.WriteLine($"Зашифрованный пароль:\t{ encrypter.encryptedPassword}");
+
+            Console.WriteLine($"Расшифрованый пароль:\t{encrypter.Decrypt()}");
+
+
+            string tmp = encrypter.Decrypt();
+
+
+            Console.WriteLine(tmp.Equals(password));
+            Console.WriteLine($"{tmp}\n{password}");
+
+
+            //Console.WriteLine(Equals(password, tmp));
 
             Console.ReadKey();
         }
+
+
     }
 }

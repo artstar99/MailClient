@@ -10,6 +10,11 @@
 *.userosscache
 *.sln.docstates
 
+# Добавляем в игнор DLL
+CodePasswordDLL/
+TestConsole/
+TestWpf/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

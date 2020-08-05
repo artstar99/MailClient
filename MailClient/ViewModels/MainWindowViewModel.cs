@@ -14,6 +14,14 @@ using MailClient.Models;
 
 namespace MailClient.ViewModels
 {
+
+    //TODO 1: Добавление имейлов в базу данных ++++++++++++++
+    //TODO 2: Верификация ввода даннх
+    //TODO 3: Поиск по адресам рассылки 
+    //TODO 4: Создание списков рассылки
+    //TODO 5: Добавление ввода пароля для почты отправителя
+    //TODO 6: Добавление базы данных для хранения паролей и почты (добавление пользователей)
+
     class MainWindowViewModel : BaseViewModel
     {
         private string title = "MyMailClient";

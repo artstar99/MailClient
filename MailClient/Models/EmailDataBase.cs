@@ -6,17 +6,16 @@ namespace MailClient.Models
 {
     internal class EmailDataBase
     {
-        
-        
         private readonly EmailsDataContext emailsDataContext = new EmailsDataContext();
         private ObservableCollection<Emaildb> emails;
 
         public ObservableCollection<Emaildb> GetEmails() => 
             new ObservableCollection<Emaildb>(emailsDataContext.Emaildb);
 
+         
 
 
-        public void RemoveItem(Emaildb email)
+        public void RemoveEntry(Emaildb email)
         {
 
             if (email == null) return;
@@ -25,14 +24,21 @@ namespace MailClient.Models
 
         }
 
-
-        public int AddEmail(Emaildb email)
+        public void AddEntry(Emaildb email)
         {
-            if (emailsDataContext.Emaildb.Contains(email)) return email.Id;
+            if (email == null)return;
+            if (emailsDataContext.Emaildb.Contains(email)) return;
             emailsDataContext.Emaildb.InsertOnSubmit(email);
             emailsDataContext.SubmitChanges();
-            return email.Id;
         }
+
+        //public int AddEmail(Emaildb email)
+        //{
+        //    if (emailsDataContext.Emaildb.Contains(email)) return email.Id;
+        //    emailsDataContext.Emaildb.InsertOnSubmit(email);
+        //    emailsDataContext.SubmitChanges();
+        //    return email.Id;
+        //}
 
     }
 }
