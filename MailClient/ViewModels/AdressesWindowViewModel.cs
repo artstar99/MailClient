@@ -18,6 +18,8 @@ namespace MailClient.ViewModels
         private Emaildb selected;
         private string newEntryEmail;
         private string newEntryName;
+        private string filterText;
+        private ObservableCollection<Emaildb> emailsOutput;
 
         public ObservableCollection<Emaildb> Emails
         {
@@ -26,9 +28,47 @@ namespace MailClient.ViewModels
             {
                 if (Equals(emails, value)) return;
                 emails = value;
+                //emailsOutput = value;
                 OnPropertyChanged();
+               //  OnPropertyChanged(nameof(EmailsOutput));
             }
         }
+
+        public ObservableCollection<Emaildb> EmailsOutput
+        {
+            get
+            {
+                return emailsOutput;
+            }
+            set
+            {
+
+                if (Equals(emailsOutput, value)) return;
+                    emailsOutput = value;
+                    OnPropertyChanged();
+
+            }
+        }
+
+
+        public string FilterText
+        {
+            get => filterText;
+            set
+            {
+                if (filterText == value) return;
+                filterText = value;
+                OnPropertyChanged();
+                var query = from e in Emails
+                            where e.email.Contains(FilterText) || e.name.Contains(FilterText)
+                            select e;
+                emailsOutput = new ObservableCollection<Emaildb> (query);
+
+                OnPropertyChanged(nameof(EmailsOutput));
+                
+            }
+        }
+
 
         #region Текстбоксы добавления нового имейла
         public string NewEntryEmail
@@ -75,7 +115,9 @@ namespace MailClient.ViewModels
         {
 
             emailDb.RemoveEntry(Selected);
-            Emails.RemoveAt(Selected.Id - 1);
+            Emails.Remove(Selected);
+            EmailsOutput.Remove(Selected);
+            //Synchronize();
 
         }
         #endregion
@@ -83,25 +125,37 @@ namespace MailClient.ViewModels
         public ICommand AddEntryCommand { get; }
         private bool CanAddEntryCommandExecute(object p)
         {
-            return (NewEntryEmail!=null && NewEntryName != null && NewEntryEmail != "" && NewEntryName != "");
+            return (!String.IsNullOrEmpty(NewEntryEmail) && !String.IsNullOrEmpty(NewEntryName));
         }
 
         private void OnAddEntryCommandExecuted(object p)
         {
+            Synchronize();
+           
             Emaildb entry =
                 new Emaildb
                 {
-                    Id = emails.Count+1,
+                    Id = emails.Count + 1,
                     email = NewEntryEmail,
                     name = NewEntryName
                 };
-            
+
             emailDb.AddEntry(entry);
             Emails.Add(entry);
-            NewEntryEmail = null;
-            NewEntryName = null;
+            NewEntryEmail = "";
+            NewEntryName = "";
             //emailDb.RemoveEntry(Selected);
             //Emails.RemoveAt(Selected.Id - 1);
+
+        }
+
+
+        private void Synchronize()
+        {
+            filterText = null;
+            emailsOutput = emails;
+            OnPropertyChanged(nameof(EmailsOutput));
+            OnPropertyChanged(nameof(FilterText));
 
         }
 
@@ -109,6 +163,7 @@ namespace MailClient.ViewModels
         {
             emailDb = new EmailDataBase();
             emails = emailDb.GetEmails();
+            emailsOutput = emails;
 
             AddEntryCommand = new RelayCommand(OnAddEntryCommandExecuted, CanAddEntryCommandExecute);
             RemoveEmailItemCommand = new RelayCommand(OnRemoveEmailItemCommandExecuted, CanRemoveEmailItemCommandExecute);

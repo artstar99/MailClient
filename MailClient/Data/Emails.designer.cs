@@ -30,6 +30,7 @@ namespace MailClient.Data
 		
     #region Определения метода расширяемости
     partial void OnCreated();
+    partial void InsertEmaildb(Emaildb instance);
     partial void UpdateEmaildb(Emaildb instance);
     partial void DeleteEmaildb(Emaildb instance);
     #endregion
@@ -70,11 +71,6 @@ namespace MailClient.Data
 			{
 				return this.GetTable<Emaildb>();
 			}
-		}
-		
-		private void InsertEmaildb(Emaildb obj)
-		{
-			this.InsertItem(((System.Nullable<int>)(obj.Id)), obj.email, obj.name);
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.InsertItem")]

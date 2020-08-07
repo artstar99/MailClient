@@ -22,7 +22,7 @@
                   Margin="10"
                   VerticalGridLinesBrush="LightGray"
                   HorizontalGridLinesBrush="LightGray"
-                  ItemsSource="{Binding Emails}"
+                  ItemsSource="{Binding EmailsOutput, UpdateSourceTrigger=PropertyChanged}"
                   SelectionMode="Single"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -40,7 +40,7 @@
         <ToolBarPanel Orientation="Vertical" >
             <TextBlock Text="Поиск:" Margin="10,10,10,2"/>
             <TextBox
-                Text="{Binding SearchInDataGrid}"
+                Text="{Binding FilterText,  UpdateSourceTrigger=PropertyChanged}"
                 Height="25"
                 Margin="10,2"
             />

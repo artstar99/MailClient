@@ -6,13 +6,8 @@
       <Column Name="email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
-    <InsertFunction FunctionId="FunctionId1">
-      <Argument Parameter="id" Member="Id" />
-      <Argument Parameter="email" Member="email" />
-      <Argument Parameter="name" Member="name" />
-    </InsertFunction>
   </Table>
-  <Function Id="FunctionId1" Name="dbo.InsertItem" Method="InsertItem">
+  <Function Name="dbo.InsertItem" Method="InsertItem">
     <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
     <Parameter Name="email" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />

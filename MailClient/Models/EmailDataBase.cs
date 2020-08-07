@@ -9,10 +9,10 @@ namespace MailClient.Models
         private readonly EmailsDataContext emailsDataContext = new EmailsDataContext();
         private ObservableCollection<Emaildb> emails;
 
-        public ObservableCollection<Emaildb> GetEmails() => 
-            new ObservableCollection<Emaildb>(emailsDataContext.Emaildb);
-
-         
+        public ObservableCollection<Emaildb> GetEmails()
+        {
+            return new ObservableCollection<Emaildb>(emailsDataContext.Emaildb);
+        }
 
 
         public void RemoveEntry(Emaildb email)
