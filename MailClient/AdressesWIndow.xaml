@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MailClient"
         xmlns:cmd="clr-namespace:MailClient.Infrastructure"
         xmlns:vm ="clr-namespace:MailClient.ViewModels"
+        xmlns:rules="clr-namespace:MailClient.ValidationRules"
         Title="AdressesWindow" Height="500" Width="800">
 
     <Window.DataContext>
@@ -60,9 +61,19 @@
                          Padding="3"
                          Margin="10,2,10,5"
                          MinWidth="100"
-                         Text="{Binding NewEntryEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          x:Name="TextBoxEmail">
-                    
+                    <TextBox.Text>
+                        <Binding Path="NewEntryEmail"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True"
+                                 ValidatesOnDataErrors="True" >
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                                <rules:EmailAdressValidationRule/>
+                            </Binding.ValidationRules>
+
+                        </Binding>
+                    </TextBox.Text>
                 </TextBox>
                 <TextBlock Text="Имя:"
                            Margin="10,0,0,0"

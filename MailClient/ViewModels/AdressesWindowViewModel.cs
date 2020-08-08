@@ -42,11 +42,9 @@ namespace MailClient.ViewModels
             }
             set
             {
-
                 if (Equals(emailsOutput, value)) return;
                     emailsOutput = value;
                     OnPropertyChanged();
-
             }
         }
 

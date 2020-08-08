@@ -89,6 +89,7 @@
     <Compile Include="AdressesWindow.xaml.cs">
       <DependentUpon>AdressesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValidationRules\EmailAdressValidationRule.cs" />
     <Compile Include="ViewModels\AdressesWindowViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
