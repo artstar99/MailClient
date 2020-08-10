@@ -8,6 +8,8 @@ using System.Windows.Input;
 using MailClient.Data;
 using MailClient.Infrastructure;
 using MailClient.Models;
+/////// Добавлен комментарий из Github
+
 
 namespace MailClient.ViewModels
 {
